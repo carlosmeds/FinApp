@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinApp">
-        <activity android:name=".DashboardActivity"></activity>
-        <activity android:name=".MainActivity" android:theme="@style/AppCompat.TelaCheia">
+        <activity android:name=".activity.DashboardActivity"></activity>
+        <activity android:name=".activity.MainActivity" android:theme="@style/AppCompat.TelaCheia">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

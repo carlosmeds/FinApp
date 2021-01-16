@@ -1,9 +1,11 @@
-package br.ufpr.tads.finapp;
+package br.ufpr.tads.finapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+
+import br.ufpr.tads.finapp.R;
 
 public class DashboardActivity extends AppCompatActivity {
 
