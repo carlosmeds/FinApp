@@ -4,7 +4,12 @@ import java.io.Serializable;
 
 public class TransactionType implements Serializable {
     private Long id;
-    private String type;
+    private String description;
+
+    public TransactionType(Long id, String type) {
+        this.id = id;
+        this.description = type;
+    }
 
     public Long getId() {
         return id;
@@ -15,10 +20,10 @@ public class TransactionType implements Serializable {
     }
 
     public String getType() {
-        return type;
+        return description;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.description = type;
     }
 }

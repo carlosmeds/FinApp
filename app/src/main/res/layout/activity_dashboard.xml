@@ -34,6 +34,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
+            android:onClick="onClick"
             android:text="Crédito"
             app:layout_constraintEnd_toStartOf="@+id/buttonDebit"
             app:layout_constraintStart_toStartOf="parent"

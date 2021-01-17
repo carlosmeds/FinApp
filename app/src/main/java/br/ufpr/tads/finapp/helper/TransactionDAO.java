@@ -28,7 +28,7 @@ public class TransactionDAO {
         values.put("value",transaction.getTransactionValue());
 
         try{
-            write.insert(DBHelper.TABLE1_NAME, null, values);
+            write.insert(DBHelper.TABLE_TRANSATION, null, values);
             Log.i("INFO","Transação salva com sucesso. ");
         }catch (Exception e){
             Log.i("INFO","Erro ao salvar transação: " + e.getMessage());
@@ -43,7 +43,7 @@ public class TransactionDAO {
 
         try{
             String[] args = {transaction.getId().toString()};
-            write.update(DBHelper.TABLE1_NAME, values, "id=?", args);
+            write.update(DBHelper.TABLE_TRANSATION, values, "id=?", args);
             Log.i("INFO","Transação atualizada com sucesso. ");
         }catch (Exception e) {
             Log.i("INFO", "Erro ao atualizar transação: " + e.getMessage());
@@ -55,7 +55,7 @@ public class TransactionDAO {
     public boolean deleteTransaction(Transaction transaction){
         try{
             String[] args = {transaction.getId().toString()};
-            write.delete(DBHelper.TABLE1_NAME, "id=?",args);
+            write.delete(DBHelper.TABLE_TRANSATION, "id=?",args);
             Log.i("INFO","Transação removida com sucesso. ");
         }catch (Exception e){
             Log.i("INFO","Erro ao remover transação: " + e.getMessage());
@@ -65,7 +65,7 @@ public class TransactionDAO {
 
     public List<Transaction> getAllTransaction(Transaction transaction){
         List<Transaction> transactionList = new ArrayList<>();
-        Cursor cursor = read.query(DBHelper.TABLE1_NAME, new String[]{"id","value"},
+        Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"id","value"},
                 null,null,null,null,null);
 
         while(cursor.moveToNext()){
