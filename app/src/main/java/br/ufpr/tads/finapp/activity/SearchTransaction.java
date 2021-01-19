@@ -23,12 +23,11 @@ public class SearchTransaction extends AppCompatActivity {
         setContentView(R.layout.activity_search_transaction);
         TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
 
-        TransactionList = transactionDAO.getAllTransactions();
-        for (Transaction transaction:TransactionList
-        ) {
+        TransactionList = transactionDAO.getAllTransactions(this);
+        for (Transaction transaction:TransactionList) {
             Log.i("INFO","Transaction List:" + transaction.getTransactionValue()
-                    + " - " + transaction.getTransactionDate()
-                    + " - " + transaction.getTransactionType().getType());
+                    + " - " + transaction.getTransactionDate());
+//                    + " - " + transaction.getTransactionType().getType());
         }
     }
 }

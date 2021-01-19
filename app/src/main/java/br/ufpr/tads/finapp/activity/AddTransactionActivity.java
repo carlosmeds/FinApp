@@ -29,7 +29,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_transaction);
         TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(getApplicationContext());
-        //transactionTypeDAO.insertTransactionType(new TransactionType("Somente Teste!"));
 
         TransactionTypeList = transactionTypeDAO.getAllTransactionTypes();
         for (TransactionType type:TransactionTypeList
@@ -45,22 +44,22 @@ public class AddTransactionActivity extends AppCompatActivity {
         Log.i("INFO","Transaction Value:" + value);
 
         if(value == 0){
-            Toast.makeText(this,"Forneça um valor diferente de 0!", Toast.LENGTH_SHORT);
+            Toast.makeText(this,"Forneça um valor diferente de 0!", Toast.LENGTH_SHORT).show();
         } else {
             Date dateNow = Calendar.getInstance().getTime();
             Log.i("INFO","Transaction Time:" + dateNow);
 
             Transaction transaction = new Transaction();
-            transaction.setTransactionType(TransactionTypeList.get(0));
+            transaction.setTransactionType(TransactionTypeList.get(2));
             transaction.setTransactionValue(value);
             transaction.setTransactionDate(dateNow);
 
             TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
             if (transactionDAO.insertTransaction(transaction)){
-                Toast.makeText(this,"Transação foi salva com sucesso!", Toast.LENGTH_SHORT);
+                Toast.makeText(this,"Transação foi salva com sucesso!", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(this,"Não foi possível realizar a transação!", Toast.LENGTH_SHORT);
+                Toast.makeText(this,"Não foi possível realizar a transação!", Toast.LENGTH_SHORT).show();
             }
         };
     }

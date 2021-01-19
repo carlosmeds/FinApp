@@ -60,6 +60,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            android:onClick="onClickShowStatement"
             android:text="Extrato"
             app:layout_constraintEnd_toStartOf="@+id/buttonSearch"
             app:layout_constraintStart_toStartOf="parent"

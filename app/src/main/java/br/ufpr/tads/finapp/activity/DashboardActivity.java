@@ -5,11 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
-
 import br.ufpr.tads.finapp.R;
 
 public class DashboardActivity extends AppCompatActivity {
+    private Intent it;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,15 +18,20 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void onClickAddTransaction(View view){
-        Intent it = new Intent(this, AddTransactionActivity.class);
+        it = new Intent(this, AddTransactionActivity.class);
         startActivity(it);
 
     }
 
     public void onClickSearchTransaction(View view){
-        Intent it = new Intent(this, SearchTransaction.class);
+        it = new Intent(this, SearchTransaction.class);
         startActivity(it);
 
+    }
+
+    public void onClickShowStatement(View view) {
+        it = new Intent(this, StatementActivity.class);
+        startActivity(it);
     }
 
     public void onClickQuitApp(View view) {

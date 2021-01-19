@@ -69,9 +69,9 @@ public class TransactionDAO {
         return false;
     }
 
-    public List<Transaction> getAllTransactions(){
+    public List<Transaction> getAllTransactions(Context context){
         final Locale myLocale = new Locale("pt", "BR");
-        SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", myLocale);
+        SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
 
         List<Transaction> transactionList = new ArrayList<>();
         Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"id","value","date","transactionTypeId"},
@@ -80,11 +80,15 @@ public class TransactionDAO {
         while(cursor.moveToNext()){
             Transaction t = new Transaction();
             try {
+                TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(context);
+
                 Long transactionId = cursor.getLong(cursor.getColumnIndex("id"));
                 Double transactionValue = cursor.getDouble(cursor.getColumnIndex("value"));
                 String transactionDateString = cursor.getString(cursor.getColumnIndex("date"));
                 Date transactionDate = format.parse(transactionDateString);
-                //TransactionType type =  DAO.getByType()...
+                Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
+
+                TransactionType type =  transactionTypeDAO.getTypeById(transactionType);
 
                 t.setId(transactionId);
                 t.setTransactionValue(transactionValue);
@@ -95,6 +99,6 @@ public class TransactionDAO {
             }
 
         }
-        return null;
+        return transactionList;
     }
 }
