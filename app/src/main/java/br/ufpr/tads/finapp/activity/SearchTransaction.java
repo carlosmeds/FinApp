@@ -26,8 +26,8 @@ public class SearchTransaction extends AppCompatActivity {
         TransactionList = transactionDAO.getAllTransactions(this);
         for (Transaction transaction:TransactionList) {
             Log.i("INFO","Transaction List:" + transaction.getTransactionValue()
-                    + " - " + transaction.getTransactionDate());
-//                    + " - " + transaction.getTransactionType().getType());
+                    + " - " + transaction.getTransactionDate()
+                    + " - " + transaction.getTransactionType().getType());
         }
     }
 }

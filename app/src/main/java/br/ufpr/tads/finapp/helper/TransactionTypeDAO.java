@@ -36,6 +36,7 @@ public class TransactionTypeDAO {
     }
 
     public TransactionType getTypeById(Long id){
+        TransactionType transactionType = new TransactionType();
         String table = DBHelper.TABLE_TRANSATION_TYPE;
         String where = "id=?";
         String[] args = {id.toString()};
@@ -44,10 +45,11 @@ public class TransactionTypeDAO {
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();
             String description = cursor.getString(cursor.getColumnIndex("description"));
-            Log.i("Descrição", description);
+            transactionType.setType(description);
+            transactionType.setId(id);
         }
 
-        return null;
+        return transactionType;
     }
 
     public List<TransactionType> getAllTransactionTypes() {

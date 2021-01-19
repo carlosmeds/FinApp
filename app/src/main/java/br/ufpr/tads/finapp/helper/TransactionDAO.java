@@ -87,12 +87,12 @@ public class TransactionDAO {
                 String transactionDateString = cursor.getString(cursor.getColumnIndex("date"));
                 Date transactionDate = format.parse(transactionDateString);
                 Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
-
                 TransactionType type =  transactionTypeDAO.getTypeById(transactionType);
 
                 t.setId(transactionId);
                 t.setTransactionValue(transactionValue);
                 t.setTransactionDate(transactionDate);
+                t.setTransactionType(type);
                 transactionList.add(t);
             } catch (ParseException e) {
                 e.printStackTrace();
