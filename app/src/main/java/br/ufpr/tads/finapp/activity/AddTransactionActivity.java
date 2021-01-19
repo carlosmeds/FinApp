@@ -9,21 +9,34 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import br.ufpr.tads.finapp.R;
 import br.ufpr.tads.finapp.helper.TransactionDAO;
+import br.ufpr.tads.finapp.helper.TransactionTypeDAO;
 import br.ufpr.tads.finapp.model.Transaction;
 import br.ufpr.tads.finapp.model.TransactionType;
 
 public class AddTransactionActivity extends AppCompatActivity {
 
+    List<TransactionType> TransactionTypeList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_transaction);
-        //Carregar as categorias
+        TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(getApplicationContext());
+        //transactionTypeDAO.insertTransactionType(new TransactionType("Somente Teste!"));
+
+        TransactionTypeList = transactionTypeDAO.getAllTransactionTypes();
+        for (TransactionType type:TransactionTypeList
+             ) {
+            Log.i("INFO","TransactionTypes List:" + type.getType() + " - " + type.getId());
+        }
+
     }
 
     public void onConfirmTransaction(View view){
@@ -37,17 +50,15 @@ public class AddTransactionActivity extends AppCompatActivity {
             Date dateNow = Calendar.getInstance().getTime();
             Log.i("INFO","Transaction Time:" + dateNow);
 
-            TransactionType type = new TransactionType((long) 0,"SomenteTeste");
-            Log.i("INFO","Transaction Type:" + type.getType());
-
             Transaction transaction = new Transaction();
-            transaction.setTransactionType(type);
+            transaction.setTransactionType(TransactionTypeList.get(0));
             transaction.setTransactionValue(value);
             transaction.setTransactionDate(dateNow);
 
-            TransactionDAO transactionDAO = new TransactionDAO(this);
+            TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
             if (transactionDAO.insertTransaction(transaction)){
                 Toast.makeText(this,"Transação foi salva com sucesso!", Toast.LENGTH_SHORT);
+                finish();
             } else {
                 Toast.makeText(this,"Não foi possível realizar a transação!", Toast.LENGTH_SHORT);
             }

@@ -18,12 +18,19 @@ public class DashboardActivity extends AppCompatActivity {
         //Coloar aqui o open e close dos banco!
     }
 
-    public void onClick(View view){
+    public void onClickAddTransaction(View view){
         Intent it = new Intent(this, AddTransactionActivity.class);
         startActivity(it);
+
     }
 
-    public void quitApp(View view) {
+    public void onClickSearchTransaction(View view){
+        Intent it = new Intent(this, SearchTransaction.class);
+        startActivity(it);
+
+    }
+
+    public void onClickQuitApp(View view) {
         finishAndRemoveTask();
         System.exit(0);
     }

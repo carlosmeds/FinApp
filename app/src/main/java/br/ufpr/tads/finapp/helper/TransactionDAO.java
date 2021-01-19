@@ -6,11 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import br.ufpr.tads.finapp.model.Transaction;
+import br.ufpr.tads.finapp.model.TransactionType;
 
 public class TransactionDAO {
 
@@ -26,6 +30,8 @@ public class TransactionDAO {
     public boolean insertTransaction(Transaction transaction){
         ContentValues values = new ContentValues();
         values.put("value",transaction.getTransactionValue());
+        values.put("date",transaction.getTransactionDate().toString());
+        values.put("transactionTypeId", transaction.getTransactionType().getId());
 
         try{
             write.insert(DBHelper.TABLE_TRANSATION, null, values);
@@ -63,22 +69,32 @@ public class TransactionDAO {
         return false;
     }
 
-    public List<Transaction> getAllTransaction(Transaction transaction){
+    public List<Transaction> getAllTransactions(){
+        final Locale myLocale = new Locale("pt", "BR");
+        SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", myLocale);
+
         List<Transaction> transactionList = new ArrayList<>();
-        Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"id","value"},
+        Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"id","value","date","transactionTypeId"},
                 null,null,null,null,null);
 
         while(cursor.moveToNext()){
             Transaction t = new Transaction();
-            Long transactionId = cursor.getLong(cursor.getColumnIndex("id"));
-            Double transactionValue = cursor.getDouble(cursor.getColumnIndex("value"));
-            Date transactionDate;
-            t.setId(transactionId);
-            t.setTransactionValue(transactionValue);
+            try {
+                Long transactionId = cursor.getLong(cursor.getColumnIndex("id"));
+                Double transactionValue = cursor.getDouble(cursor.getColumnIndex("value"));
+                String transactionDateString = cursor.getString(cursor.getColumnIndex("date"));
+                Date transactionDate = format.parse(transactionDateString);
+                //TransactionType type =  DAO.getByType()...
 
-            transactionList.add(t);
+                t.setId(transactionId);
+                t.setTransactionValue(transactionValue);
+                t.setTransactionDate(transactionDate);
+                transactionList.add(t);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         }
-
         return null;
     }
 }
