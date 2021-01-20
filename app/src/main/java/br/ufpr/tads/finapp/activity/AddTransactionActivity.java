@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,7 +24,7 @@ import br.ufpr.tads.finapp.helper.TransactionTypeDAO;
 import br.ufpr.tads.finapp.model.Transaction;
 import br.ufpr.tads.finapp.model.TransactionType;
 
-public class AddTransactionActivity extends AppCompatActivity {
+public class AddTransactionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     List<TransactionType> TransactionTypeList;
 
@@ -35,6 +39,22 @@ public class AddTransactionActivity extends AppCompatActivity {
              ) {
             Log.i("INFO","TransactionTypes List:" + type.getType() + " - " + type.getId());
         }
+
+        Spinner spinner = findViewById(R.id.spinnerTransactionType);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.debitTypes, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.getOnItemSelectedListener();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String text = adapterView.getItemAtPosition(i).toString();
+        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 
@@ -63,4 +83,6 @@ public class AddTransactionActivity extends AppCompatActivity {
             }
         };
     }
+
+
 }

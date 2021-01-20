@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">FinApp</string>
+    <string-array name="creditTypes">
+        <item>Transferências</item>
+        <item>Salário,</item>
+    </string-array>
+    <string-array name="debitTypes">
+        <item>Educação</item>
+        <item>Lazer</item>
+        <item>Moradia</item>
+        <item>Saúde</item>
+        <item>Outros</item>
+    </string-array>
 </resources>
