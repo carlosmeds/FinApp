@@ -2,7 +2,6 @@ package br.ufpr.tads.finapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,8 +11,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +21,7 @@ import br.ufpr.tads.finapp.helper.TransactionTypeDAO;
 import br.ufpr.tads.finapp.model.Transaction;
 import br.ufpr.tads.finapp.model.TransactionType;
 
-public class AddTransactionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddTransactionActivity extends AppCompatActivity {
 
     List<TransactionType> TransactionTypeList;
 
@@ -47,21 +44,13 @@ public class AddTransactionActivity extends AppCompatActivity implements Adapter
         spinner.getOnItemSelectedListener();
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String text = adapterView.getItemAtPosition(i).toString();
-        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
     public void onConfirmTransaction(View view){
         EditText inputValue = findViewById(R.id.inputValue);
+        Spinner spinnerType = findViewById(R.id.spinnerTransactionType);
+        Integer typePosition = spinnerType.getSelectedItemPosition();
+        String type = spinnerType.getItemAtPosition(typePosition).toString();
         Double value = Double.parseDouble(inputValue.getText().toString());
-        Log.i("INFO","Transaction Value:" + value);
+        Log.i("INFO","Transaction Value:" + value + " Spinner: " + type);
 
         if(value == 0){
             Toast.makeText(this,"Forneça um valor diferente de 0!", Toast.LENGTH_SHORT).show();
