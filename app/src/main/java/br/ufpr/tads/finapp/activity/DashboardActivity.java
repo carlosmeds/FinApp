@@ -34,6 +34,13 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(it);
     }
 
+    public void onClickShowClassification(View view) {
+        it = new Intent(this, ClassificationActivity.class);
+        startActivity(it);
+    }
+
+
+
     public void onClickQuitApp(View view) {
         finishAndRemoveTask();
         System.exit(0);

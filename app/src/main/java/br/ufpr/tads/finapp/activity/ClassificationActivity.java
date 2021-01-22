@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -17,18 +16,17 @@ import br.ufpr.tads.finapp.adapter.TransactionAdapter;
 import br.ufpr.tads.finapp.helper.TransactionDAO;
 import br.ufpr.tads.finapp.model.Transaction;
 
+public class ClassificationActivity extends AppCompatActivity {
 
-
-public class SearchTransaction extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private TransactionAdapter TransactionAdapter;
+    private br.ufpr.tads.finapp.adapter.TransactionAdapter TransactionAdapter;
     private List<Transaction> TransactionList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_transaction);
+        setContentView(R.layout.activity_classification);
 
         recyclerView = findViewById(R.id.recyclerViewTransitionList);
 

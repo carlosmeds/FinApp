@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinApp">
-        <activity android:name=".activity.StatementActivity"></activity>
+        <activity android:name=".activity.ClassificationActivity"></activity>
+        <activity android:name=".activity.StatementActivity" />
         <activity android:name=".activity.SearchTransaction" />
         <activity android:name=".activity.AddTransactionActivity" />
         <activity android:name=".activity.DashboardActivity" />
