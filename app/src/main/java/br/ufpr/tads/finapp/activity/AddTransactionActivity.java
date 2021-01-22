@@ -59,7 +59,7 @@ public class AddTransactionActivity extends AppCompatActivity {
             Log.i("INFO","Transaction Time:" + dateNow);
 
             Transaction transaction = new Transaction();
-            transaction.setTransactionType(TransactionTypeList.get(2));
+            transaction.setTransactionType(TransactionTypeList.get(1));
             transaction.setTransactionValue(value);
             transaction.setTransactionDate(dateNow);
 

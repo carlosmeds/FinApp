@@ -40,6 +40,7 @@ public class SearchTransaction extends AppCompatActivity {
 
         TransactionAdapter = new TransactionAdapter(TransactionList);
 
+
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -55,4 +56,7 @@ public class SearchTransaction extends AppCompatActivity {
         super.onStart();
         updateRecyclerTransaction();
     }
+
+
+
 }

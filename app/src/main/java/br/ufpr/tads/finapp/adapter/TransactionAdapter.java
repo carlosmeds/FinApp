@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import br.ufpr.tads.finapp.R;
 import br.ufpr.tads.finapp.model.Transaction;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.MyViewHolder> {
@@ -48,8 +49,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Transaction transaction = TransactionList.get(position);
+
+        String pattern = "dd/MM/yyyy HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String stringDate = simpleDateFormat.format(transaction.getTransactionDate());
+
         holder.transactionValue.setText(String.valueOf(transaction.getTransactionValue()));
-        holder.transactionDate.setText(String.valueOf(transaction.getTransactionDate()));
+        holder.transactionDate.setText(stringDate);
         holder.transactionType.setText(String.valueOf(transaction.getTransactionType().getType()));
 
 
