@@ -9,6 +9,18 @@ public class Transaction implements Serializable {
     private Date transactionDate;
     private Double transactionValue;
 
+//    public Transaction(){
+//
+//    }
+//
+//    public Transaction(Long id, TransactionType transactionType, Date transactionDate, Double transactionValue){
+//        this.id = id;
+//        this.transactionType = transactionType;
+//        this.transactionDate = transactionDate;
+//        this.transactionValue = transactionValue;
+//
+//    }
+
     public Long getId() {
         return id;
     }
