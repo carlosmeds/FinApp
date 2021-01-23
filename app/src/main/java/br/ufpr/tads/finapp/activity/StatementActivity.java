@@ -21,6 +21,7 @@ public class StatementActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TransactionAdapter TransactionAdapter;
     private List<Transaction> TransactionList = new ArrayList<>();
+    private Double balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,8 @@ public class StatementActivity extends AppCompatActivity {
 
     public void updateRecyclerTransaction(){
         TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
-        TransactionList = transactionDAO.getAllTransactions(this);
+        TransactionList = transactionDAO.getStatement(this);
+        balance = transactionDAO.getBalance(this);
 
         TransactionAdapter = new TransactionAdapter(TransactionList);
 

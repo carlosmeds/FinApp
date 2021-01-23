@@ -20,6 +20,7 @@ public class TransactionDAO {
 
     private SQLiteDatabase write;
     private SQLiteDatabase read;
+    private String pattern = "yyyy-MM-dd HH:mm:ss";
 
     public TransactionDAO (Context context){
         DBHelper db = new DBHelper(context);
@@ -31,7 +32,6 @@ public class TransactionDAO {
         ContentValues values = new ContentValues();
         values.put("value",transaction.getTransactionValue());
 
-        String pattern = "yyyy-MM-dd HH:mm:ss";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String stringDate = simpleDateFormat.format(transaction.getTransactionDate());
         values.put("date",stringDate);
@@ -47,63 +47,58 @@ public class TransactionDAO {
         return true;
     }
 
-    public boolean updateTransaction(Transaction transaction){
-        ContentValues values = new ContentValues();
-        values.put("value",transaction.getTransactionValue());
-
-        try{
-            String[] args = {transaction.getId().toString()};
-            write.update(DBHelper.TABLE_TRANSATION, values, "id=?", args);
-            Log.i("INFO","Transação atualizada com sucesso. ");
-        }catch (Exception e) {
-            Log.i("INFO", "Erro ao atualizar transação: " + e.getMessage());
-            return false;
+    public Double getBalance(Context context) {
+        Double balance = 0.0;
+        Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"id","value","date","transactionTypeId"},
+                null,null,null,null,null);
+        while(cursor.moveToNext()) {
+            Double transactionValue = cursor.getDouble(cursor.getColumnIndex("value"));
+            Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
+            Log.i("Valores e tipo:", transactionType + transactionValue.toString());
+            if (transactionType <= 1)
+                balance += transactionValue;
+            else
+                balance -= transactionValue;
         }
-        return true;
+
+        Log.i("BALANCE", balance.toString());
+        return balance;
     }
 
-    public boolean deleteTransaction(Transaction transaction){
-        try{
-            String[] args = {transaction.getId().toString()};
-            write.delete(DBHelper.TABLE_TRANSATION, "id=?",args);
-            Log.i("INFO","Transação removida com sucesso. ");
-        }catch (Exception e){
-            Log.i("INFO","Erro ao remover transação: " + e.getMessage());
-        }
-        return false;
-    }
-
-    public List<Transaction> getAllTransactions(Context context){
-        final Locale myLocale = new Locale("pt", "BR");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-
+    public List<Transaction> getStatement(Context context){
         List<Transaction> transactionList = new ArrayList<>();
         Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"id","value","date","transactionTypeId"},
-                null,null,null,null,"date DESC");
+                null,null,null,null,"date DESC", "15");
 
         while(cursor.moveToNext()){
-            Transaction t = new Transaction();
-            try {
-                TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(context);
-
-                Long transactionId = cursor.getLong(cursor.getColumnIndex("id"));
-                Double transactionValue = cursor.getDouble(cursor.getColumnIndex("value"));
-                String transactionDateString = cursor.getString(cursor.getColumnIndex("date"));
-                Log.i("INFO","Data: " + transactionDateString);
-                Date transactionDate = format.parse(transactionDateString);
-                Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
-                TransactionType type =  transactionTypeDAO.getTypeById(transactionType);
-
-                t.setId(transactionId);
-                t.setTransactionValue(transactionValue);
-                t.setTransactionDate(transactionDate);
-                t.setTransactionType(type);
-                transactionList.add(t);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
+            Transaction t = buildTransactionObject(cursor, context);
+            transactionList.add(t);
         }
         return transactionList;
+    }
+
+    public Transaction buildTransactionObject(Cursor cursor,Context context) {
+        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.ENGLISH);
+        TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(context);
+        Transaction t = new Transaction();
+
+        try {
+            Long transactionId = cursor.getLong(cursor.getColumnIndex("id"));
+            Double transactionValue = cursor.getDouble(cursor.getColumnIndex("value"));
+            String transactionDateString = cursor.getString(cursor.getColumnIndex("date"));
+            Log.i("INFO","Data: " + transactionDateString);
+            Date transactionDate = format.parse(transactionDateString);
+            Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
+            TransactionType type =  transactionTypeDAO.getTypeById(transactionType);
+
+            t.setId(transactionId);
+            t.setTransactionValue(transactionValue);
+            t.setTransactionDate(transactionDate);
+            t.setTransactionType(type);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return t;
     }
 }
