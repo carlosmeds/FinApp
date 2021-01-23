@@ -49,19 +49,18 @@ public class TransactionDAO {
 
     public Double getBalance(Context context) {
         Double balance = 0.0;
-        Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"id","value","date","transactionTypeId"},
+        Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"value","transactionTypeId"},
                 null,null,null,null,null);
+
         while(cursor.moveToNext()) {
             Double transactionValue = cursor.getDouble(cursor.getColumnIndex("value"));
             Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
-            Log.i("Valores e tipo:", transactionType + transactionValue.toString());
             if (transactionType <= 1)
                 balance += transactionValue;
             else
                 balance -= transactionValue;
         }
 
-        Log.i("BALANCE", balance.toString());
         return balance;
     }
 
@@ -77,6 +76,21 @@ public class TransactionDAO {
         return transactionList;
     }
 
+    public Double[] getCategoriesStatement(Context context)     {
+        Double[] categoriesStatements = new Double[7];
+
+        Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"SUM(value) as TRANSACTION_SUM","transactionTypeId"},
+                null,null,"transactionTypeId",null,null);
+
+        while(cursor.moveToNext()){
+            Double transactionValue = cursor.getDouble(cursor.getColumnIndex("TRANSACTION_SUM"));
+            Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
+            Log.i("Soma e valor: ", transactionType.toString() + " " + transactionValue.toString());
+        }
+
+        return categoriesStatements;
+    }
+
     public Transaction buildTransactionObject(Cursor cursor,Context context) {
         SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.ENGLISH);
         TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(context);
@@ -86,7 +100,6 @@ public class TransactionDAO {
             Long transactionId = cursor.getLong(cursor.getColumnIndex("id"));
             Double transactionValue = cursor.getDouble(cursor.getColumnIndex("value"));
             String transactionDateString = cursor.getString(cursor.getColumnIndex("date"));
-            Log.i("INFO","Data: " + transactionDateString);
             Date transactionDate = format.parse(transactionDateString);
             Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
             TransactionType type =  transactionTypeDAO.getTypeById(transactionType);

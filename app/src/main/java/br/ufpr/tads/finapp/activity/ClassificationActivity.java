@@ -35,6 +35,7 @@ public class ClassificationActivity extends AppCompatActivity {
     public void updateRecyclerTransaction(){
         TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
         TransactionList = transactionDAO.getStatement(this);
+        transactionDAO.getCategoriesStatement(this);
 
         TransactionAdapter = new TransactionAdapter(TransactionList);
 

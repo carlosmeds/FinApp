@@ -12,27 +12,12 @@ import java.util.List;
 import br.ufpr.tads.finapp.model.TransactionType;
 
 public class TransactionTypeDAO {
-    private SQLiteDatabase write; //Para escrever nas tabelas
-    private SQLiteDatabase read; //Para ler nas tabelas
-
+    private SQLiteDatabase write;
+    private SQLiteDatabase read;
     public TransactionTypeDAO(Context context) {
         DBHelper db = new DBHelper(context);
         write = db.getWritableDatabase();
         read = db.getReadableDatabase();
-    }
-
-
-    public boolean insertTransactionType(TransactionType transactionType) {
-        ContentValues values = new ContentValues();
-        values.put("description", transactionType.getType());
-        try {
-            write.insert(DBHelper.TABLE_TRANSATION_TYPE, null, values);
-            Log.i("INFO", "Tipo salva com sucesso. ");
-        } catch (Exception e) {
-            Log.e("INFO", "Erro ao salvar Tipo. " + e.getMessage());
-            return false;
-        }
-        return true;
     }
 
     public TransactionType getTypeById(Long id){
