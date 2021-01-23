@@ -91,11 +91,12 @@ public class TransactionDAO {
         return categoriesStatements;
     }
 
-    public List<Transaction> getTransactionsByPeriod(Context context, String firstDate, String lastDate){
-
+    public List<Transaction> getTransactionsByPeriod(Context context, String firstDate, String lastDate, Integer creditOrDebt){
         List<Transaction> transactionList = new ArrayList<>();
+        String creditOrDebtParam = creditOrDebt == 0 ? " AND transactionTypeId <= 1" : " AND transactionTypeId > 1";
+
         Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"id","value","date","transactionTypeId"},
-                "date <= " + firstDate + "AND date >= " + lastDate,null,null,null,"date DESC");
+                "date <= " + firstDate + "AND date >= " + lastDate + creditOrDebtParam,null,null,null,"date DESC");
 
 
         while(cursor.moveToNext()){
