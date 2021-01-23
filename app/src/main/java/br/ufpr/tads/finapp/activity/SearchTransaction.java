@@ -35,8 +35,11 @@ public class SearchTransaction extends AppCompatActivity {
     }
 
     public void updateRecyclerTransaction(){
+        String firstDate = "'2021-01-23 12:20:11'";
+        String lastDate = "'2021-01-23 11:30:10'";
+
         TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
-        TransactionList = transactionDAO.getStatement(this);
+        TransactionList = transactionDAO.getTransactionsByPeriod(this, firstDate, lastDate);
 
         TransactionAdapter = new TransactionAdapter(TransactionList);
 

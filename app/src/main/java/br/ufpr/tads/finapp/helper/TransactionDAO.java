@@ -91,6 +91,20 @@ public class TransactionDAO {
         return categoriesStatements;
     }
 
+    public List<Transaction> getTransactionsByPeriod(Context context, String firstDate, String lastDate){
+
+        List<Transaction> transactionList = new ArrayList<>();
+        Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"id","value","date","transactionTypeId"},
+                "date <= " + firstDate + "AND date >= " + lastDate,null,null,null,"date DESC");
+
+
+        while(cursor.moveToNext()){
+            Transaction t = buildTransactionObject(cursor, context);
+            transactionList.add(t);
+        }
+        return transactionList;
+    }
+
     public Transaction buildTransactionObject(Cursor cursor,Context context) {
         SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.ENGLISH);
         TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(context);
@@ -103,6 +117,8 @@ public class TransactionDAO {
             Date transactionDate = format.parse(transactionDateString);
             Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
             TransactionType type =  transactionTypeDAO.getTypeById(transactionType);
+
+            Log.i("data", transactionDateString);
 
             t.setId(transactionId);
             t.setTransactionValue(transactionValue);
