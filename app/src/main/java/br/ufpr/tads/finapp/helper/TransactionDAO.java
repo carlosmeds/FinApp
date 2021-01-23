@@ -77,7 +77,7 @@ public class TransactionDAO {
     }
 
     public Double[] getCategoriesStatement(Context context)     {
-        Double[] categoriesStatements = new Double[7];
+        Double[] categoriesStatements = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
         Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"SUM(value) as TRANSACTION_SUM","transactionTypeId"},
                 null,null,"transactionTypeId",null,null);
@@ -85,7 +85,7 @@ public class TransactionDAO {
         while(cursor.moveToNext()){
             Double transactionValue = cursor.getDouble(cursor.getColumnIndex("TRANSACTION_SUM"));
             Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
-            Log.i("Soma e valor: ", transactionType.toString() + " " + transactionValue.toString());
+            categoriesStatements[transactionType.intValue()] = transactionValue;
         }
 
         return categoriesStatements;

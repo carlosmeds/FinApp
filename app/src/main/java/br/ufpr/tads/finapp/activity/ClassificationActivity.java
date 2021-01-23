@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -35,7 +36,10 @@ public class ClassificationActivity extends AppCompatActivity {
     public void updateRecyclerTransaction(){
         TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
         TransactionList = transactionDAO.getStatement(this);
-        transactionDAO.getCategoriesStatement(this);
+        Double[] categoriesStatements = transactionDAO.getCategoriesStatement(this);
+        for(int i=0; i<= 6; i++) {
+            Log.i("Tipo e soma agregada: ", i + " " + categoriesStatements[i].toString());
+        }
 
         TransactionAdapter = new TransactionAdapter(TransactionList);
 
