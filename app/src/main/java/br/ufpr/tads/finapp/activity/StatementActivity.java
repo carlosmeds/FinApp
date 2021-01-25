@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,8 @@ public class StatementActivity extends AppCompatActivity {
     private TransactionAdapter TransactionAdapter;
     private List<Transaction> TransactionList = new ArrayList<>();
     private Double balance;
+    Double valueDeb, valueCred;
+    TextView textViewCredit, textViewDebit, textViewBalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,9 @@ public class StatementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_statement);
 
         recyclerView = findViewById(R.id.recyclerViewTransitionList);
+        textViewCredit = findViewById(R.id.textViewCredit);
+        textViewDebit = findViewById(R.id.textViewDebit);
+        textViewBalance = findViewById(R.id.textViewBalance);
 
     }
 
@@ -36,6 +43,28 @@ public class StatementActivity extends AppCompatActivity {
         TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
         TransactionList = transactionDAO.getStatement(this);
         balance = transactionDAO.getBalance(this);
+
+        textViewBalance.setText(String.valueOf(balance));
+        valueCred = 0.0;
+        valueDeb = 0.0;
+
+        for (Transaction transaction:TransactionList) {
+            if(transaction.getTransactionType().getId() == 1 || transaction.getTransactionType().getId() == 0){
+                valueCred = valueCred + transaction.getTransactionValue();
+                Log.i("INFO","Transaction List:" + valueCred +
+                        " - " + transaction.getTransactionValue());
+                textViewCredit.setText(String.valueOf(valueCred));
+
+            }
+            else{
+                valueDeb = valueDeb + transaction.getTransactionValue();
+                Log.i("INFO","Transaction List:" + valueDeb +
+                        " - " + transaction.getTransactionValue());
+                textViewDebit.setText(String.valueOf(valueDeb));
+
+            }
+
+        }
 
         TransactionAdapter = new TransactionAdapter(TransactionList);
 
