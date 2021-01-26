@@ -13,15 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpr.tads.finapp.R;
-import br.ufpr.tads.finapp.adapter.TransactionAdapter;
+import br.ufpr.tads.finapp.adapter.CategoriesAdapter;
 import br.ufpr.tads.finapp.helper.TransactionDAO;
 import br.ufpr.tads.finapp.model.Transaction;
 
 public class ClassificationActivity extends AppCompatActivity {
 
-
     private RecyclerView recyclerView;
-    private br.ufpr.tads.finapp.adapter.TransactionAdapter TransactionAdapter;
+    private br.ufpr.tads.finapp.adapter.CategoriesAdapter CategoriesAdapter;
     private List<Transaction> TransactionList = new ArrayList<>();
 
     @Override
@@ -35,13 +34,12 @@ public class ClassificationActivity extends AppCompatActivity {
 
     public void updateRecyclerTransaction(){
         TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
-        TransactionList = transactionDAO.getStatement(this);
         Double[] categoriesStatements = transactionDAO.getCategoriesStatement(this);
         for(int i=0; i<= 6; i++) {
             Log.i("Tipo e soma agregada: ", i + " " + categoriesStatements[i].toString());
         }
 
-        TransactionAdapter = new TransactionAdapter(TransactionList);
+        CategoriesAdapter = new CategoriesAdapter(categoriesStatements);
 
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getApplicationContext());
@@ -49,7 +47,7 @@ public class ClassificationActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new
                 DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
-        recyclerView.setAdapter(TransactionAdapter);
+        recyclerView.setAdapter(CategoriesAdapter);
 
     }
 
