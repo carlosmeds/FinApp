@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.ufpr.tads.finapp.R;
+import br.ufpr.tads.finapp.adapter.SpinAdapter;
 import br.ufpr.tads.finapp.helper.DatePickerFragment;
 import br.ufpr.tads.finapp.helper.TimePickerFragment;
 import br.ufpr.tads.finapp.helper.TransactionDAO;
@@ -33,6 +34,8 @@ import br.ufpr.tads.finapp.model.TransactionType;
 public class AddTransactionActivity extends AppCompatActivity {
 
     List<TransactionType> TransactionTypeList;
+    private SpinAdapter adapter;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +44,28 @@ public class AddTransactionActivity extends AppCompatActivity {
         TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(getApplicationContext());
 
         TransactionTypeList = transactionTypeDAO.getAllTransactionTypes();
-        for (TransactionType type : TransactionTypeList
-        ) {
+        for (TransactionType type : TransactionTypeList) {
             Log.i("INFO", "TransactionTypes List:" + type.getType() + " - " + type.getId());
         }
 
-        Spinner spinner = findViewById(R.id.spinnerTransactionType);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.debitTypes, android.R.layout.simple_spinner_item);
+        spinner = findViewById(R.id.spinnerTransactionType);
+        adapter = new SpinAdapter(this, android.R.layout.simple_spinner_item, TransactionTypeList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.getOnItemSelectedListener();
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                // Here you get the current item (a User object) that is selected by its position
+                TransactionType t = adapter.getItem(position);
+                // Here you can do the action you want to...
+                Log.i("TYPE("+t.getId()+"):",t.getType());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {}
+        });
 
         TextView dateText = findViewById(R.id.dateTransaction);
         dateText.setOnClickListener(new View.OnClickListener() {
@@ -100,10 +115,12 @@ public class AddTransactionActivity extends AppCompatActivity {
         if (value <= 0 || value.isNaN()) {
             Toast.makeText(this, "Forneça um valor Válido!", Toast.LENGTH_SHORT).show();
         } else {
-            Log.i("INFO", "Transaction Time:" + dateTransaction);
+            Log.i("INFO", "Transaction Time: " + dateTransaction);
 
+            TransactionType t = (TransactionType) spinner.getSelectedItem();
+            Log.i("INFO", "Transaction Type: " + t.getType());
             Transaction transaction = new Transaction();
-            transaction.setTransactionType(TransactionTypeList.get(4));
+            transaction.setTransactionType(t);
             transaction.setTransactionValue(value);
             transaction.setTransactionDate(dateTransaction);
 
