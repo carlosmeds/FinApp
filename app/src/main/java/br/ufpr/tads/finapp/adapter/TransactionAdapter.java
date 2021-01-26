@@ -1,6 +1,5 @@
 package br.ufpr.tads.finapp.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private List<Transaction> TransactionList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-
         TextView transactionValue, transactionType, transactionDate;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -28,7 +26,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             transactionValue = itemView.findViewById(R.id.textViewTransaction);
             transactionType = itemView.findViewById(R.id.textViewTransactionType);
             transactionDate = itemView.findViewById(R.id.textViewTransactionDate);
-
         }
     }
 
@@ -43,7 +40,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.transaction_cell,
                         parent, false);
         return new MyViewHolder(toDoItem);
-
     }
 
     @Override
@@ -57,9 +53,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.transactionValue.setText(String.valueOf(transaction.getTransactionValue()));
         holder.transactionDate.setText(stringDate);
         holder.transactionType.setText(String.valueOf(transaction.getTransactionType().getType()));
-
-
-
     }
 
     @Override
