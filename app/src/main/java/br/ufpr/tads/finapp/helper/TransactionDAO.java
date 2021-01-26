@@ -32,7 +32,7 @@ public class TransactionDAO {
         ContentValues values = new ContentValues();
         values.put("value",transaction.getTransactionValue());
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.ENGLISH);
         String stringDate = simpleDateFormat.format(transaction.getTransactionDate());
         values.put("date",stringDate);
         values.put("transactionTypeId", transaction.getTransactionType().getId());
@@ -115,11 +115,12 @@ public class TransactionDAO {
             Long transactionId = cursor.getLong(cursor.getColumnIndex("id"));
             Double transactionValue = cursor.getDouble(cursor.getColumnIndex("value"));
             String transactionDateString = cursor.getString(cursor.getColumnIndex("date"));
+
             Date transactionDate = format.parse(transactionDateString);
             Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
             TransactionType type =  transactionTypeDAO.getTypeById(transactionType);
 
-            Log.i("data", transactionDateString);
+            Log.i("data", transactionDateString + " ---> " + transactionDateString);
 
             t.setId(transactionId);
             t.setTransactionValue(transactionValue);
