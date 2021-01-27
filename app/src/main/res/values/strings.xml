@@ -11,4 +11,5 @@
         <item>Saúde</item>
         <item>Outros</item>
     </string-array>
+    <string name="debit">Débito</string>
 </resources>

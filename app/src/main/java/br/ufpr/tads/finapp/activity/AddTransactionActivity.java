@@ -5,14 +5,18 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +37,10 @@ import br.ufpr.tads.finapp.model.TransactionType;
 
 public class AddTransactionActivity extends AppCompatActivity {
 
-    List<TransactionType> TransactionTypeList;
-    private SpinAdapter adapter;
+    List<TransactionType> TransactionTypeListDebit;
+    List<TransactionType> TransactionTypeListCredit;
     private Spinner spinner;
+    private SpinAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,28 +48,59 @@ public class AddTransactionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_transaction);
         TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(getApplicationContext());
 
-        TransactionTypeList = transactionTypeDAO.getAllTransactionTypes();
-        for (TransactionType type : TransactionTypeList) {
-            Log.i("INFO", "TransactionTypes List:" + type.getType() + " - " + type.getId());
-        }
+        TransactionTypeListDebit = transactionTypeDAO.getDebitTransactionTypes();
+        TransactionTypeListCredit = transactionTypeDAO.getCreditTransactionTypes();
+
+        TextView switchTransactionBackground = findViewById(R.id.switchTransactionBackground);
+        switchTransactionBackground.setBackgroundColor(Color.parseColor("#b4ffc8"));
 
         spinner = findViewById(R.id.spinnerTransactionType);
-        adapter = new SpinAdapter(this, android.R.layout.simple_spinner_item, TransactionTypeList);
+        adapter = new SpinAdapter(AddTransactionActivity.this, android.R.layout.simple_spinner_item, TransactionTypeListDebit);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
-                // Here you get the current item (a User object) that is selected by its position
                 TransactionType t = adapter.getItem(position);
-                // Here you can do the action you want to...
-                Log.i("TYPE("+t.getId()+"):",t.getType());
+                Log.i("TYPE(" + t.getId() + "):", t.getType());
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapter) {}
+            public void onNothingSelected(AdapterView<?> adapter) {
+            }
+        });
+
+        Switch switchTransaction = findViewById(R.id.switchTransaction);
+
+
+        switchTransaction.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                for (TransactionType type : TransactionTypeListCredit) {
+                    Log.i("INFO", "TransactionTypes List:" + type.getType() + " - " + type.getId());
+                }
+
+                for (TransactionType type : TransactionTypeListDebit) {
+                    Log.i("INFO", "TransactionTypes List:" + type.getType() + " - " + type.getId());
+                }
+
+                if (isChecked) {
+                    adapter = new SpinAdapter(AddTransactionActivity.this, android.R.layout.simple_spinner_item, TransactionTypeListCredit);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                    switchTransactionBackground.setBackgroundColor(Color.parseColor("#ffb4b4"));
+                    switchTransaction.setText("Crédito");
+
+                } else {
+                    adapter = new SpinAdapter(AddTransactionActivity.this, android.R.layout.simple_spinner_item, TransactionTypeListDebit);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                    switchTransactionBackground.setBackgroundColor(Color.parseColor("#b4ffc8"));
+                    switchTransaction.setText("Débito");
+                }
+            }
         });
 
         TextView dateText = findViewById(R.id.dateTransaction);
@@ -134,6 +170,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         }
         ;
     }
+
 
 
 }
