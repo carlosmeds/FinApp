@@ -11,13 +11,13 @@
         android:id="@+id/textType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="36dp"
         android:text="Tipo:"
         android:textAlignment="center"
         android:textColorHighlight="#673AB7"
         android:textColorLink="#673AB7"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputValue" />
 
@@ -25,7 +25,6 @@
         android:id="@+id/inputValue"
         android:layout_width="240dp"
         android:layout_height="52dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="numberDecimal"
@@ -34,6 +33,7 @@
         android:textColor="#757575"
         android:textColorHighlight="#673AB7"
         android:textColorLink="#673AB7"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textValue" />
 
@@ -41,7 +41,6 @@
         android:id="@+id/textValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:text="Valor:"
         android:textAlignment="center"
@@ -49,6 +48,7 @@
         android:textColorHighlight="#673AB7"
         android:textColorLink="#673AB7"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switchTransaction" />
 
@@ -57,31 +57,15 @@
         style="@style/Widget.AppCompat.Spinner.Underlined"
         android:layout_width="240dp"
         android:layout_height="52dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textType" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="32dp"
-        android:backgroundTint="#673AB7"
-        android:onClick="onConfirmTransaction"
-        android:tint="#673AB7"
-        app:backgroundTint="#673AB7"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:rippleColor="#673AB7"
-        app:srcCompat="?android:attr/textCheckMark" />
 
     <TextView
         android:id="@+id/dateTransaction"
         android:layout_width="240dp"
         android:layout_height="52dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="64dp"
         android:singleLine="true"
         android:text="Selecione a Data"
@@ -90,6 +74,7 @@
         android:textColorHighlight="#673AB7"
         android:textColorLink="#673AB7"
         android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerTransactionType" />
 
@@ -97,7 +82,6 @@
         android:id="@+id/hourTransaction"
         android:layout_width="240dp"
         android:layout_height="52dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:singleLine="true"
         android:text="Selecione a Hora"
@@ -106,6 +90,7 @@
         android:textColorHighlight="#673AB7"
         android:textColorLink="#673AB7"
         android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateTransaction" />
 
@@ -120,14 +105,25 @@
         android:id="@+id/switchTransaction"
         android:layout_width="240dp"
         android:layout_height="54dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:text="@string/debit"
         android:textColor="#757575"
         android:textColorHighlight="#673AB7"
         android:textColorLink="#673AB7"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/switchTransactionBackground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/confirmTransaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:onClick="onConfirmTransaction"
+        android:text="Confirmar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

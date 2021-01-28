@@ -54,7 +54,7 @@ public class TransactionTypeDAO {
         return TransactionTypeList;
     }
 
-    public List<TransactionType> getCreditTransactionTypes() {
+    public List<TransactionType> getDebitTransactionTypes() {
         List<TransactionType> TransactionTypeList = new ArrayList<>();
         Cursor cursor = read.query(DBHelper.TABLE_TRANSATION_TYPE, new String[]{"id", "description"},
                 "id >= ?", new String[]{"2"}, null, null, null );
@@ -66,12 +66,11 @@ public class TransactionTypeDAO {
             transactionType.setId(id);
             transactionType.setType(type);
             TransactionTypeList.add(transactionType);
-
         }
         return TransactionTypeList;
     }
 
-    public List<TransactionType> getDebitTransactionTypes() {
+    public List<TransactionType> getCreditTransactionTypes() {
         List<TransactionType> TransactionTypeList = new ArrayList<>();
         Cursor cursor = read.query(DBHelper.TABLE_TRANSATION_TYPE, new String[]{"id", "description"},
                 "id=? OR id=?", new String[]{"0","1"}, null, null, null );
@@ -83,8 +82,8 @@ public class TransactionTypeDAO {
             transactionType.setId(id);
             transactionType.setType(type);
             TransactionTypeList.add(transactionType);
-
         }
+
         return TransactionTypeList;
     }
 }

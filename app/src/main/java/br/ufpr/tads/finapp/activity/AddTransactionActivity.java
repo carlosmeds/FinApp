@@ -52,7 +52,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         TransactionTypeListCredit = transactionTypeDAO.getCreditTransactionTypes();
 
         TextView switchTransactionBackground = findViewById(R.id.switchTransactionBackground);
-        switchTransactionBackground.setBackgroundColor(Color.parseColor("#b4ffc8"));
+        switchTransactionBackground.setBackgroundColor(Color.parseColor("#ffb4b4"));
 
         spinner = findViewById(R.id.spinnerTransactionType);
         adapter = new SpinAdapter(AddTransactionActivity.this, android.R.layout.simple_spinner_item, TransactionTypeListDebit);
@@ -78,26 +78,18 @@ public class AddTransactionActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                for (TransactionType type : TransactionTypeListCredit) {
-                    Log.i("INFO", "TransactionTypes List:" + type.getType() + " - " + type.getId());
-                }
-
-                for (TransactionType type : TransactionTypeListDebit) {
-                    Log.i("INFO", "TransactionTypes List:" + type.getType() + " - " + type.getId());
-                }
-
                 if (isChecked) {
                     adapter = new SpinAdapter(AddTransactionActivity.this, android.R.layout.simple_spinner_item, TransactionTypeListCredit);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(adapter);
-                    switchTransactionBackground.setBackgroundColor(Color.parseColor("#ffb4b4"));
+                    switchTransactionBackground.setBackgroundColor(Color.parseColor("#b4ffc8"));
                     switchTransaction.setText("Crédito");
 
                 } else {
                     adapter = new SpinAdapter(AddTransactionActivity.this, android.R.layout.simple_spinner_item, TransactionTypeListDebit);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(adapter);
-                    switchTransactionBackground.setBackgroundColor(Color.parseColor("#b4ffc8"));
+                    switchTransactionBackground.setBackgroundColor(Color.parseColor("#ffb4b4"));
                     switchTransaction.setText("Débito");
                 }
             }

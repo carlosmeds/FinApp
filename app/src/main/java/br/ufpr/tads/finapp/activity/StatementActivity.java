@@ -33,8 +33,6 @@ public class StatementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_statement);
 
         recyclerView = findViewById(R.id.recyclerViewTransitionList);
-        textViewCredit = findViewById(R.id.textViewCredit);
-        textViewDebit = findViewById(R.id.textViewDebit);
         textViewBalance = findViewById(R.id.textViewBalance);
 
     }
@@ -45,27 +43,6 @@ public class StatementActivity extends AppCompatActivity {
         balance = transactionDAO.getBalance(this);
 
         textViewBalance.setText(String.valueOf(balance));
-        valueCred = 0.0;
-        valueDeb = 0.0;
-
-        for (Transaction transaction:TransactionList) {
-            if(transaction.getTransactionType().getId() == 1 || transaction.getTransactionType().getId() == 0){
-                valueCred = valueCred + transaction.getTransactionValue();
-                Log.i("INFO","Transaction List:" + valueCred +
-                        " - " + transaction.getTransactionValue());
-                textViewCredit.setText(String.valueOf(valueCred));
-
-            }
-            else{
-                valueDeb = valueDeb + transaction.getTransactionValue();
-                Log.i("INFO","Transaction List:" + valueDeb +
-                        " - " + transaction.getTransactionValue());
-                textViewDebit.setText(String.valueOf(valueDeb));
-
-            }
-
-        }
-
         TransactionAdapter = new TransactionAdapter(TransactionList);
 
         RecyclerView.LayoutManager layoutManager =
