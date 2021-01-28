@@ -41,6 +41,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     List<TransactionType> TransactionTypeListCredit;
     private Spinner spinner;
     private SpinAdapter adapter;
+    private Boolean isDebit = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +49,8 @@ public class AddTransactionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_transaction);
         TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(getApplicationContext());
 
-        TransactionTypeListDebit = transactionTypeDAO.getDebitTransactionTypes();
-        TransactionTypeListCredit = transactionTypeDAO.getCreditTransactionTypes();
+        TransactionTypeListDebit = transactionTypeDAO.getTransactionTypes(true);
+        TransactionTypeListCredit = transactionTypeDAO.getTransactionTypes(false);
 
         TextView switchTransactionBackground = findViewById(R.id.switchTransactionBackground);
         switchTransactionBackground.setBackgroundColor(Color.parseColor("#ffb4b4"));
