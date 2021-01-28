@@ -9,6 +9,11 @@ public class TransactionType implements Serializable {
     public TransactionType() {
     }
 
+    public TransactionType(Long id, String description) {
+        this.id = id;
+        this.description=description;
+    }
+
     public TransactionType(String description) {
         this.description = description;
     }

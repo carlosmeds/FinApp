@@ -8,6 +8,7 @@ public class Transaction implements Serializable {
     private TransactionType transactionType;
     private Date transactionDate;
     private Double transactionValue;
+    private int img;
 
 //    public Transaction(){
 //
@@ -20,6 +21,14 @@ public class Transaction implements Serializable {
 //        this.transactionValue = transactionValue;
 //
 //    }
+
+    public int getImg() {
+        return img;
+    }
+
+    public void setImg(int img) {
+        this.img = img;
+    }
 
     public Long getId() {
         return id;

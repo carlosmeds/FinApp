@@ -100,7 +100,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment dateFragment = new DatePickerFragment();
+                DialogFragment dateFragment = new DatePickerFragment(dateText);
                 dateFragment.show(getSupportFragmentManager(), "datePicker");
             }
         });

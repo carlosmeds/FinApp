@@ -15,6 +15,12 @@ import java.util.Calendar;
 import br.ufpr.tads.finapp.R;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+    private TextView textView;
+
+    public DatePickerFragment(TextView textView) {
+        this.textView = textView;
+    }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -27,7 +33,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        TextView t = (TextView)getActivity().findViewById(R.id.dateTransaction);
+
         month++;
         String d = String.valueOf(day);
         String m = String.valueOf(month);
@@ -36,7 +42,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         if (month < 10)
             m = "0"+month;
 
-        t.setText(d+"/"+m+"/"+year);
+        this.textView.setText(d+"/"+m+"/"+year);
     }
 
 }

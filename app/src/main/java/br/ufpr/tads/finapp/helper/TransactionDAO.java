@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import br.ufpr.tads.finapp.R;
 import br.ufpr.tads.finapp.model.Transaction;
 import br.ufpr.tads.finapp.model.TransactionType;
 
@@ -91,12 +92,19 @@ public class TransactionDAO {
         return categoriesStatements;
     }
 
-    public List<Transaction> getTransactionsByPeriod(Context context, String firstDate, String lastDate, Integer creditOrDebt){
+    public List<Transaction> getTransactionsByPeriod(Context context, String firstDate, String lastDate, TransactionType type){
         List<Transaction> transactionList = new ArrayList<>();
-        String creditOrDebtParam = creditOrDebt == 0 ? " AND transactionTypeId <= 1" : " AND transactionTypeId > 1";
+        String creditOrDebtParam = "'";
+
+        if (type.getId() == 20){
+            creditOrDebtParam = "' AND transactionTypeId <= 1";
+        } else if (type.getId() == 21){
+            creditOrDebtParam = "' AND transactionTypeId > 1";
+        }
 
         Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"id","value","date","transactionTypeId"},
-                "date <= " + firstDate + "AND date >= " + lastDate + creditOrDebtParam,null,null,null,"date DESC");
+                "date >= '" + firstDate + "' AND date <= '" + lastDate + creditOrDebtParam,null,null,null,"date DESC");
+
 
 
         while(cursor.moveToNext()){
@@ -126,6 +134,7 @@ public class TransactionDAO {
             t.setTransactionValue(transactionValue);
             t.setTransactionDate(transactionDate);
             t.setTransactionType(type);
+            t.setImg(R.drawable.dinheiro);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package br.ufpr.tads.finapp.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,12 +21,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView transactionValue, transactionType, transactionDate;
+        ImageView transactionImage;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             transactionValue = itemView.findViewById(R.id.textViewTransaction);
             transactionType = itemView.findViewById(R.id.textViewTransactionType);
             transactionDate = itemView.findViewById(R.id.textViewTransactionDate);
+            transactionImage = itemView.findViewById(R.id.imageView);
         }
     }
 
@@ -52,6 +55,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         holder.transactionValue.setText(String.valueOf(transaction.getTransactionValue()));
         holder.transactionDate.setText(stringDate);
+        holder.transactionImage.setImageResource(transaction.getImg());
         holder.transactionType.setText(String.valueOf(transaction.getTransactionType().getType()));
     }
 
