@@ -1,20 +1,26 @@
 package br.ufpr.tads.finapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpr.tads.finapp.R;
+import br.ufpr.tads.finapp.adapter.SpinAdapter;
 import br.ufpr.tads.finapp.adapter.TransactionAdapter;
+import br.ufpr.tads.finapp.helper.DatePickerFragment;
+import br.ufpr.tads.finapp.helper.TimePickerFragment;
 import br.ufpr.tads.finapp.helper.TransactionDAO;
 import br.ufpr.tads.finapp.model.Transaction;
 
@@ -25,7 +31,8 @@ public class SearchTransaction extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TransactionAdapter TransactionAdapter;
     private List<Transaction> TransactionList = new ArrayList<>();
-
+    private Spinner spinner;
+    private SpinAdapter adapter;
 
 
 
@@ -36,6 +43,23 @@ public class SearchTransaction extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerViewTransitionList);
 
+        TextView dateTextIni = findViewById(R.id.textViewDateInicio);
+        dateTextIni.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment dateFragment = new DatePickerFragment();
+                dateFragment.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
+
+        TextView dateTextFim = findViewById(R.id.textViewDateFim);
+        dateTextFim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment dateFragment = new DatePickerFragment();
+                dateFragment.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
 
 
     }
@@ -60,6 +84,8 @@ public class SearchTransaction extends AppCompatActivity {
         recyclerView.setAdapter(TransactionAdapter);
 
     }
+
+    
 
     @Override
     protected void onStart() {
