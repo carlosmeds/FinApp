@@ -15,6 +15,7 @@ import java.util.Locale;
 
 import br.ufpr.tads.finapp.R;
 import br.ufpr.tads.finapp.model.Transaction;
+import br.ufpr.tads.finapp.model.TransactionCategory;
 import br.ufpr.tads.finapp.model.TransactionType;
 
 public class TransactionDAO {
@@ -77,16 +78,24 @@ public class TransactionDAO {
         return transactionList;
     }
 
-    public Double[] getCategoriesStatement(Context context)     {
-        Double[] categoriesStatements = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    public List<TransactionCategory> getCategoriesStatement(Context context) {
+        List<TransactionCategory> categoriesStatements = new ArrayList<>();
 
         Cursor cursor = read.query(DBHelper.TABLE_TRANSATION, new String[]{"SUM(value) as TRANSACTION_SUM","transactionTypeId"},
-                null,null,"transactionTypeId",null,null);
+                null,null,"transactionTypeId",null,"TRANSACTION_SUM DESC");
 
         while(cursor.moveToNext()){
+            TransactionCategory t = new TransactionCategory();
+            TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(context);
+
             Double transactionValue = cursor.getDouble(cursor.getColumnIndex("TRANSACTION_SUM"));
             Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
-            categoriesStatements[transactionType.intValue()] = transactionValue;
+            TransactionType type =  transactionTypeDAO.getTypeById(transactionType);
+
+            t.setValue(transactionValue);
+            t.setTypeName(type.getType());
+
+            categoriesStatements.add(t);
         }
 
         return categoriesStatements;

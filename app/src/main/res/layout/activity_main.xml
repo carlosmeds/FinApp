@@ -11,10 +11,10 @@
     <LinearLayout
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="250dp"
-        android:orientation="vertical"
         android:layout_gravity="center"
-        android:background="@drawable/logopng">
+        android:layout_marginTop="250dp"
+        android:background="@drawable/knowledge"
+        android:orientation="vertical">
 
     </LinearLayout>
 

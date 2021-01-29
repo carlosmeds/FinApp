@@ -16,12 +16,13 @@ import br.ufpr.tads.finapp.R;
 import br.ufpr.tads.finapp.adapter.CategoriesAdapter;
 import br.ufpr.tads.finapp.helper.TransactionDAO;
 import br.ufpr.tads.finapp.model.Transaction;
+import br.ufpr.tads.finapp.model.TransactionCategory;
 
 public class ClassificationActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private br.ufpr.tads.finapp.adapter.CategoriesAdapter CategoriesAdapter;
-    private List<Transaction> TransactionList = new ArrayList<>();
+    private List<TransactionCategory> categoriesStatements = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +35,7 @@ public class ClassificationActivity extends AppCompatActivity {
 
     public void updateRecyclerTransaction(){
         TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
-        Double[] categoriesStatements = transactionDAO.getCategoriesStatement(this);
-        for(int i=0; i<= 6; i++) {
-            Log.i("Tipo e soma agregada: ", i + " " + categoriesStatements[i].toString());
-        }
+        categoriesStatements = transactionDAO.getCategoriesStatement(this);
 
         CategoriesAdapter = new CategoriesAdapter(categoriesStatements);
 

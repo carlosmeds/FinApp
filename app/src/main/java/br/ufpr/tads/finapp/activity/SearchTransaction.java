@@ -24,7 +24,6 @@ import br.ufpr.tads.finapp.R;
 import br.ufpr.tads.finapp.adapter.SpinAdapter;
 import br.ufpr.tads.finapp.adapter.TransactionAdapter;
 import br.ufpr.tads.finapp.helper.DatePickerFragment;
-import br.ufpr.tads.finapp.helper.TimePickerFragment;
 import br.ufpr.tads.finapp.helper.TransactionDAO;
 import br.ufpr.tads.finapp.model.Transaction;
 import br.ufpr.tads.finapp.model.TransactionType;
@@ -37,9 +36,6 @@ public class SearchTransaction extends AppCompatActivity {
     private List<Transaction> TransactionList = new ArrayList<>();
     private Spinner spinner;
     private SpinAdapter adapter;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

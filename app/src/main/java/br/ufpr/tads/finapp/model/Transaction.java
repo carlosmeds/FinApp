@@ -10,18 +10,6 @@ public class Transaction implements Serializable {
     private Double transactionValue;
     private int img;
 
-//    public Transaction(){
-//
-//    }
-//
-//    public Transaction(Long id, TransactionType transactionType, Date transactionDate, Double transactionValue){
-//        this.id = id;
-//        this.transactionType = transactionType;
-//        this.transactionDate = transactionDate;
-//        this.transactionValue = transactionValue;
-//
-//    }
-
     public int getImg() {
         return img;
     }
