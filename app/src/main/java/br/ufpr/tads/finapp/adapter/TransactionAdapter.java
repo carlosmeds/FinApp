@@ -25,10 +25,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            transactionValue = itemView.findViewById(R.id.textViewTransaction);
-            transactionType = itemView.findViewById(R.id.textViewTransactionType);
+            transactionValue = itemView.findViewById(R.id.textViewCategory);
+            transactionType = itemView.findViewById(R.id.textViewCategoryType);
             transactionDate = itemView.findViewById(R.id.textViewTransactionDate);
-            transactionImage = itemView.findViewById(R.id.imageView);
+            transactionImage = itemView.findViewById(R.id.imageViewTransactionType);
         }
     }
 
@@ -49,12 +49,15 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Transaction transaction = TransactionList.get(position);
 
-        String pattern = "dd/MM/yyyy HH:mm:ss";
+        String pattern = "dd/MM/yyyy HH:mm";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String stringDate = simpleDateFormat.format(transaction.getTransactionDate());
-
-        holder.transactionValue.setText(String.valueOf(transaction.getTransactionValue()));
         holder.transactionDate.setText(stringDate);
+
+        String stringValue = String.format("R$ %.2f", transaction.getTransactionValue());
+        stringValue = stringValue.replace(".", ",");
+        holder.transactionValue.setText(stringValue);
+
         holder.transactionImage.setImageResource(transaction.getImg());
         holder.transactionType.setText(String.valueOf(transaction.getTransactionType().getType()));
     }

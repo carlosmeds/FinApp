@@ -42,7 +42,9 @@ public class StatementActivity extends AppCompatActivity {
         TransactionList = transactionDAO.getStatement(this);
         balance = transactionDAO.getBalance(this);
 
-        textViewBalance.setText(String.valueOf(balance));
+        String stringBalance = String.format("Seu saldo: R$ %.2f", balance);
+        stringBalance = stringBalance.replace(".", ",");
+        textViewBalance.setText(stringBalance);
         TransactionAdapter = new TransactionAdapter(TransactionList);
 
         RecyclerView.LayoutManager layoutManager =

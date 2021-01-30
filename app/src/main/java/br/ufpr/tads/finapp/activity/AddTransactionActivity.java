@@ -100,17 +100,8 @@ public class AddTransactionActivity extends AppCompatActivity {
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment dateFragment = new DatePickerFragment(dateText);
+                DialogFragment dateFragment = new DatePickerFragment(dateText, true, getSupportFragmentManager());
                 dateFragment.show(getSupportFragmentManager(), "datePicker");
-            }
-        });
-
-        TextView hourText = findViewById(R.id.hourTransaction);
-        hourText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment timerFragment = new TimePickerFragment();
-                timerFragment.show(getSupportFragmentManager(), "timePicker");
             }
         });
     }
@@ -128,10 +119,9 @@ public class AddTransactionActivity extends AppCompatActivity {
         Log.i("INFO", "Transaction Value:" + value + " Spinner Position: " + typePosition);
 
         TextView dateTransactionText = findViewById(R.id.dateTransaction);
-        TextView hourTransactionText = findViewById(R.id.hourTransaction);
-        Date dateNow = Calendar.getInstance().getTime();
+
         Date dateTransaction = Calendar.getInstance().getTime();
-        String dateString = dateTransactionText.getText().toString() + " " + hourTransactionText.getText().toString();
+        String dateString = dateTransactionText.getText().toString();
 
         try {
             //Parse da data informada:

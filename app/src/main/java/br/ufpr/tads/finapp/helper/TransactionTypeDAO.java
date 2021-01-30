@@ -45,6 +45,12 @@ public class TransactionTypeDAO {
             TransactionType transactionType = new TransactionType();
             Long id = cursor.getLong(cursor.getColumnIndex("id"));
             String type = cursor.getString(cursor.getColumnIndex("description"));
+
+            if (id < 2)
+                type = type.replace("Crédito - ", "");
+            else
+                type = type.replace("Débito - ", "");
+
             transactionType.setId(id);
             transactionType.setType(type);
             TransactionTypeList.add(transactionType);

@@ -9,10 +9,10 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewTransactionType"
         android:layout_width="80dp"
         android:layout_height="120dp"
-        tools:srcCompat="@drawable/dinheiro" />
+        tools:srcCompat="@drawable/money" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,16 +20,17 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewTransaction"
+            android:id="@+id/textViewCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="TextView"
             android:textAlignment="center"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textViewTransactionType"
+            android:id="@+id/textViewCategoryType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

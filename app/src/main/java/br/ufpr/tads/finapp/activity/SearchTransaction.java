@@ -43,9 +43,9 @@ public class SearchTransaction extends AppCompatActivity {
         setContentView(R.layout.activity_search_transaction);
 
         List<TransactionType> TransactionListValues = new ArrayList<>();
-        TransactionType t1 = new TransactionType((long) 20, "credito");
-        TransactionType t2 = new TransactionType((long) 21, "debito");
-        TransactionType t3 = new TransactionType((long) 22, "todos");
+        TransactionType t1 = new TransactionType((long) 20, "Crédito");
+        TransactionType t2 = new TransactionType((long) 21, "Débito");
+        TransactionType t3 = new TransactionType((long) 22, "Todos");
 
         TransactionListValues.add(t1);
         TransactionListValues.add(t2);
@@ -58,7 +58,7 @@ public class SearchTransaction extends AppCompatActivity {
         dateTextIni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment dateFragment = new DatePickerFragment(dateTextIni);
+                DialogFragment dateFragment = new DatePickerFragment(dateTextIni, false, getSupportFragmentManager());
                 dateFragment.show(getSupportFragmentManager(), "datePicker");
             }
         });
@@ -67,7 +67,7 @@ public class SearchTransaction extends AppCompatActivity {
         dateTextFim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment dateFragment = new DatePickerFragment(dateTextFim);
+                DialogFragment dateFragment = new DatePickerFragment(dateTextFim, false, getSupportFragmentManager());
                 dateFragment.show(getSupportFragmentManager(), "datePicker");
             }
         });
@@ -90,6 +90,9 @@ public class SearchTransaction extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {
+                TransactionType t3 = new TransactionType((long) 22, "Todos");
+                if(!(dateTextIni.getText().equals("Data Inicio")) && !(dateTextIni.getText().equals("Data fim")))
+                    updateRecyclerTransaction(t3);
             }
         });
 
@@ -101,8 +104,6 @@ public class SearchTransaction extends AppCompatActivity {
         String dtini = dateTextIni.getText().toString();
         String dtfim = dateTextFim.getText().toString();
 
-
-
         SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat simpleDateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -112,10 +113,6 @@ public class SearchTransaction extends AppCompatActivity {
 
             dtini = simpleDateString.format(dateTransactionIni);
             dtfim = simpleDateString.format(dateTransactionFim);
-
-            Log.i("info: ", dtfim);
-
-
 
             TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
             TransactionList = transactionDAO.getTransactionsByPeriod(this, dtini, dtfim, t);

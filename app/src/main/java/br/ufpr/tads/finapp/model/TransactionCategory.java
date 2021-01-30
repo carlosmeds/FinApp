@@ -3,6 +3,7 @@ package br.ufpr.tads.finapp.model;
 public class TransactionCategory {
     private Double value;
     private String typeName;
+    private int typeImage;
 
     public TransactionCategory() {
     }
@@ -21,5 +22,13 @@ public class TransactionCategory {
 
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    public int getTypeImage() {
+        return typeImage;
+    }
+
+    public void setTypeImage(int typeImage) {
+        this.typeImage = typeImage;
     }
 }

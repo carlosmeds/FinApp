@@ -87,6 +87,7 @@ public class TransactionDAO {
         while(cursor.moveToNext()){
             TransactionCategory t = new TransactionCategory();
             TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(context);
+            ImageHelper image = new ImageHelper();
 
             Double transactionValue = cursor.getDouble(cursor.getColumnIndex("TRANSACTION_SUM"));
             Long transactionType = cursor.getLong(cursor.getColumnIndex("transactionTypeId"));
@@ -94,6 +95,7 @@ public class TransactionDAO {
 
             t.setValue(transactionValue);
             t.setTypeName(type.getType());
+            t.setTypeImage(image.setImage(transactionType));
 
             categoriesStatements.add(t);
         }
@@ -126,6 +128,7 @@ public class TransactionDAO {
     public Transaction buildTransactionObject(Cursor cursor,Context context) {
         SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.ENGLISH);
         TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO(context);
+        ImageHelper image = new ImageHelper();
         Transaction t = new Transaction();
 
         try {
@@ -143,7 +146,8 @@ public class TransactionDAO {
             t.setTransactionValue(transactionValue);
             t.setTransactionDate(transactionDate);
             t.setTransactionType(type);
-            t.setImg(R.drawable.dinheiro);
+            t.setImg(image.setImage(transactionType));
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
