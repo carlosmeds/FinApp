@@ -63,8 +63,6 @@ public class AddTransactionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
-                TransactionType t = adapter.getItem(position);
-                Log.i("TYPE(" + t.getId() + "):", t.getType());
             }
 
             @Override
@@ -112,19 +110,13 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     public void onConfirmTransaction(View view) {
         EditText inputValue = findViewById(R.id.inputValue);
-        Spinner spinnerType = findViewById(R.id.spinnerTransactionType);
-        Integer typePosition = spinnerType.getSelectedItemPosition();
-        String type = spinnerType.getItemAtPosition(typePosition).toString();
         Double value = Double.parseDouble(inputValue.getText().toString());
-        Log.i("INFO", "Transaction Value:" + value + " Spinner Position: " + typePosition);
-
         TextView dateTransactionText = findViewById(R.id.dateTransaction);
 
         Date dateTransaction = Calendar.getInstance().getTime();
         String dateString = dateTransactionText.getText().toString();
 
         try {
-            //Parse da data informada:
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             dateTransaction = simpleDateFormat.parse(dateString);
         } catch (ParseException e) {

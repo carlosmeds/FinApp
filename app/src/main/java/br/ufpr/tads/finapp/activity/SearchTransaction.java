@@ -36,6 +36,7 @@ public class SearchTransaction extends AppCompatActivity {
     private List<Transaction> TransactionList = new ArrayList<>();
     private Spinner spinner;
     private SpinAdapter adapter;
+    private TransactionType transactionType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,6 @@ public class SearchTransaction extends AppCompatActivity {
         TransactionListValues.add(t1);
         TransactionListValues.add(t2);
         TransactionListValues.add(t3);
-
 
         recyclerView = findViewById(R.id.recyclerViewTransitionList);
 
@@ -81,21 +81,19 @@ public class SearchTransaction extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
-                TransactionType t = adapter.getItem(position);
-                Log.i("TYPE(" + t.getId() + "):", t.getType());
-                if(!(dateTextIni.getText().equals("Data Inicio")) && !(dateTextIni.getText().equals("Data fim")))
-                    updateRecyclerTransaction(t);
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {
-                TransactionType t3 = new TransactionType((long) 22, "Todos");
-                if(!(dateTextIni.getText().equals("Data Inicio")) && !(dateTextIni.getText().equals("Data fim")))
-                    updateRecyclerTransaction(t3);
             }
         });
+    }
 
+    public void searchStatements(View view) {
+        spinner = findViewById(R.id.spinnerTransactionFilter);
+        transactionType = (TransactionType) spinner.getSelectedItem();
+
+        updateRecyclerTransaction(transactionType);
     }
 
     public void updateRecyclerTransaction(TransactionType t){
@@ -123,8 +121,6 @@ public class SearchTransaction extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -135,13 +131,8 @@ public class SearchTransaction extends AppCompatActivity {
 
     }
 
-
-
     @Override
     protected void onStart() {
         super.onStart();
     }
-
-
-
 }
