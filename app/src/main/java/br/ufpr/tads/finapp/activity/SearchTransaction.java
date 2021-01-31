@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +37,7 @@ public class SearchTransaction extends AppCompatActivity {
     private List<Transaction> TransactionList = new ArrayList<>();
     private Spinner spinner;
     private SpinAdapter adapter;
+    private TransactionType typeSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,6 @@ public class SearchTransaction extends AppCompatActivity {
         TransactionListValues.add(t1);
         TransactionListValues.add(t2);
         TransactionListValues.add(t3);
-
 
         recyclerView = findViewById(R.id.recyclerViewTransitionList);
 
@@ -81,21 +82,27 @@ public class SearchTransaction extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
-                TransactionType t = adapter.getItem(position);
-                Log.i("TYPE(" + t.getId() + "):", t.getType());
-                if(!(dateTextIni.getText().equals("Data Inicio")) && !(dateTextIni.getText().equals("Data fim")))
-                    updateRecyclerTransaction(t);
-
+                typeSelected = adapter.getItem(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {
-                TransactionType t3 = new TransactionType((long) 22, "Todos");
-                if(!(dateTextIni.getText().equals("Data Inicio")) && !(dateTextIni.getText().equals("Data fim")))
-                    updateRecyclerTransaction(t3);
+
             }
         });
 
+    }
+
+    public void onConfirm(View view){
+        TextView dateTextIni = findViewById(R.id.textViewDateInicio);
+        TextView dateTextFim = findViewById(R.id.textViewDateFim);
+
+        if(dateTextIni.getText().equals("Data Inicio"))
+            Toast.makeText(this, "Insira uma Data de Início!", Toast.LENGTH_SHORT).show();
+        else if (dateTextFim.getText().equals("Data Fim"))
+            Toast.makeText(this, "Insira uma Data de Fim!", Toast.LENGTH_SHORT).show();
+        else
+            updateRecyclerTransaction(typeSelected);
     }
 
     public void updateRecyclerTransaction(TransactionType t){
@@ -118,12 +125,18 @@ public class SearchTransaction extends AppCompatActivity {
             TransactionList = transactionDAO.getTransactionsByPeriod(this, dtini, dtfim, t);
 
             TransactionAdapter = new TransactionAdapter(TransactionList);
+            if (TransactionList.size() == 0){
+                if(typeSelected.getType().equals("Crédito"))
+                    Toast.makeText(this, "Nenhuma transação de Crédito foi encontrada no intervalo informado", Toast.LENGTH_LONG).show();
+                else if(typeSelected.getType().equals("Débito"))
+                    Toast.makeText(this, "Nenhuma transação de Débito foi encontrada no intervalo informado", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(this, "Nenhuma transação foi encontrada no intervalo informado", Toast.LENGTH_LONG).show();
+            }
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
 
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getApplicationContext());
@@ -134,8 +147,6 @@ public class SearchTransaction extends AppCompatActivity {
         recyclerView.setAdapter(TransactionAdapter);
 
     }
-
-
 
     @Override
     protected void onStart() {
