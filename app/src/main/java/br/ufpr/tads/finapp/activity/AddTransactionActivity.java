@@ -115,21 +115,19 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         Date dateTransaction = Calendar.getInstance().getTime();
         String dateString = dateTransactionText.getText().toString();
-
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            dateTransaction = simpleDateFormat.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if (value <= 0 || value.isNaN()) {
-            Toast.makeText(this, "Forneça um valor Válido!", Toast.LENGTH_SHORT).show();
-        } else {
-            Log.i("INFO", "Transaction Time: " + dateTransaction);
+        if(value <= 0){
+            Toast.makeText(this, "Forneça um Valor Válido!", Toast.LENGTH_SHORT).show();
+        } else if (dateTransactionText.getText().toString().equals("Selecione a Data e Hora")){
+            Toast.makeText(this, "Forneça uma Data Válida!", Toast.LENGTH_SHORT).show();
+        } else{
+            try {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                dateTransaction = simpleDateFormat.parse(dateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             TransactionType t = (TransactionType) spinner.getSelectedItem();
-            Log.i("INFO", "Transaction Type: " + t.getType());
             Transaction transaction = new Transaction();
             transaction.setTransactionType(t);
             transaction.setTransactionValue(value);
@@ -143,7 +141,6 @@ public class AddTransactionActivity extends AppCompatActivity {
                 Toast.makeText(this, "Não foi possível realizar a transação!", Toast.LENGTH_SHORT).show();
             }
         }
-        ;
     }
 
 
