@@ -73,15 +73,16 @@
         android:textColor="#757575"
         android:textColorHighlight="#673AB7"
         android:textColorLink="#673AB7"
-        android:textSize="28sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerTransactionType" />
 
     <TextView
         android:id="@+id/switchTransactionBackground"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="102dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
