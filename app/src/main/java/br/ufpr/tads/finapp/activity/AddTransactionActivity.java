@@ -110,12 +110,17 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     public void onConfirmTransaction(View view) {
         EditText inputValue = findViewById(R.id.inputValue);
-        Double value = Double.parseDouble(inputValue.getText().toString());
+        Double value = 0.0;
         TextView dateTransactionText = findViewById(R.id.dateTransaction);
 
         Date dateTransaction = Calendar.getInstance().getTime();
         String dateString = dateTransactionText.getText().toString();
-        if(value <= 0){
+
+        if (inputValue.length() != 0){
+           value = Double.parseDouble(inputValue.getText().toString());
+        }
+
+        if(value <= 0 || value.isNaN() || inputValue.getText() == null){
             Toast.makeText(this, "Forneça um Valor Válido!", Toast.LENGTH_SHORT).show();
         } else if (dateTransactionText.getText().toString().equals("Selecione a Data e Hora")){
             Toast.makeText(this, "Forneça uma Data Válida!", Toast.LENGTH_SHORT).show();
